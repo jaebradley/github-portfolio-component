@@ -1,56 +1,109 @@
 import React, { Component } from 'react';
-import { Card, CardImg, CardBody, CardTitle, CardSubtitle, CardText, Button } from 'reactstrap';
+import { Card, CardBody, CardTitle, CardSubtitle, Button } from 'reactstrap';
 import axios from 'axios';
-import cheerio from 'cheerio';
+import PropTypes from 'prop-types';
+import fontawesome from '@fortawesome/fontawesome';
+import FontAwesomeIcon from '@fortawesome/react-fontawesome';
+import { faExternalLinkAlt } from '@fortawesome/fontawesome-free-solid';
 
 import 'bootstrap/dist/css/bootstrap.css';
+
+import GitHubRepositoryDetails from '../GitHubRepositoryDetails';
+
+import '../../css/style.css';
+
+fontawesome.library.add(faExternalLinkAlt);
+
+const DEFAULT_README = '# No README';
+
+class BasicCard extends Component {
+  constructor(props) {
+    super(props);
+
+    this.openModal = props.openModal.bind(this);
+  }
+
+  render() {
+    const { owner, name, description } = this.props;
+    return (
+      <Card className='repository-card'>
+        <CardBody>
+          <CardTitle>
+            <a href={`https://github.com/${owner}/${name}`} target='__blank'>{ name }</a>
+            <span>{ ' ' }<FontAwesomeIcon className='repository-link' icon={'external-link-square-alt'} /></span>
+          </CardTitle>
+          <CardSubtitle>{ description }</CardSubtitle>
+        </CardBody>
+        <Button color='primary' onClick={this.openModal}>Details</Button>
+      </Card>
+    );
+  }
+}
 
 class GitHubRepository extends Component {
   constructor(props) {
     super(props);
 
-    const { owner, name } = this.props;
+    this.openModal = this.openModal.bind(this);
 
     this.state = {
-      owner,
-      name,
-      description: '',
-      tags: [],
+      showModal: false,
+      readme: DEFAULT_README,
     };
   }
 
-  componentDidMount() {
-    const { owner, name } = this.props;
+  openModal() {
+    this.setState({ showModal: true });
+  }
 
-    axios({ method: 'get', url: `http://cors-anywhere.herokuapp.com/https://github.com/${owner}/${name}`, headers: { origin: null } })
-      .then(response => response.data)
-      .then(html => cheerio.load(html))
-      .then($ => {
-        const repositoryName = $('strong[itemprop=name] > a').text();
-        const description = $('meta[name=description]').attr('content');
-        const tagLinks = $('a[class="topic-tag topic-tag-link"]');
-        const tags = tagLinks.get().map(tagLink => tagLink.attribs['data-octo-dimensions'].match(/^topic:(.*)/)[1]);
-        this.setState({
-          name: repositoryName,
-          description,
-          tags,
-        });
-      }).catch();
+  componentDidMount() {
+    const { owner, name, readme } = this.props;
+
+    if (!readme) {
+      axios({ method: 'get', url: `http://cors-anywhere.herokuapp.com/https://raw.githubusercontent.com/${owner}/${name}/master/README.md`, headers: { origin: null } })
+        .then(response => this.setState({ readme: response.data }))
+        .catch(this.setState({ readme: DEFAULT_README }));
+    } else {
+      this.setState({ readme });
+    }
   }
 
   render() {
-    const { owner, name, description, tags } = this.state;
+    const { owner, name, description } = this.props;
+    const { showModal, readme } = this.state;
     return (
-      <Card>
-        <CardImg top width="100%" src="https://placeholdit.imgix.net/~text?txtsize=33&txt=318%C3%97180&w=318&h=180" alt="Card image cap" />
-        <CardBody>
-          <CardTitle>{ `${owner}/${name}` }</CardTitle>
-          <CardSubtitle>{ description }</CardSubtitle>
-          <Button color='primary'>Details</Button>
-        </CardBody>
-      </Card>
+      <div>
+        <BasicCard
+          owner={owner}
+          name={name}
+          description={description}
+          openModal={this.openModal}
+        />
+        <GitHubRepositoryDetails
+          show={showModal}
+          readme={readme}
+        />
+      </div>
     )
   }
 }
+
+BasicCard.propTypes = {
+  owner: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  description: PropTypes.string.isRequired,
+  openModal: PropTypes.func.isRequired,
+}
+
+GitHubRepository.defaultProps = {
+  readme: DEFAULT_README,
+};
+
+GitHubRepository.propTypes = {
+  name: PropTypes.string.isRequired,
+  description: PropTypes.string.isRequired,
+  owner: PropTypes.string.isRequired,
+  readme: PropTypes.string,
+};
 
 export default GitHubRepository;
