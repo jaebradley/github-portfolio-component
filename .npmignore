@@ -7,3 +7,5 @@ src/
 test/
 *.test.js
 coverage/
+*.md
+*.stories.js
