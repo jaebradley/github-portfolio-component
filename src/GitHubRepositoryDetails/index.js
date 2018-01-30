@@ -13,8 +13,9 @@ class GitHubRepositoryDetails extends Component {
 
     const { show } = props;
 
+    console.log(props);
+
     this.converter = new showdown.Converter();
-    this.toggle = this.toggle.bind(this);
     this.close = this.close.bind(this);
 
     this.state = { show };
@@ -24,12 +25,10 @@ class GitHubRepositoryDetails extends Component {
     this.setState({ show: nextProps.show });
   }
 
-  toggle() {
-    this.setState({ show: !this.state.show });
-  }
-
   close() {
     this.setState({ show: false });
+
+    this.props.onClose();
   }
 
   render() {
@@ -40,9 +39,9 @@ class GitHubRepositoryDetails extends Component {
       <Modal
         className='project-details'
         isOpen={show}
-        toggle={this.toggle}
+        toggle={this.close}
       >
-        <ModalHeader toggle={this.toggle} />
+        <ModalHeader toggle={this.close} />
         <ModalBody>
           { renderHTML(this.converter.makeHtml(readme)) }
         </ModalBody>
@@ -54,9 +53,14 @@ class GitHubRepositoryDetails extends Component {
   }
 }
 
+GitHubRepositoryDetails.defaultProps = {
+  onClose: null,
+};
+
 GitHubRepositoryDetails.propTypes = {
   show: PropTypes.bool.isRequired,
   readme: PropTypes.string.isRequired,
+  onClose: PropTypes.string,
 };
 
 export default GitHubRepositoryDetails;

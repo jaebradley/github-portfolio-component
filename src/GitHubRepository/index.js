@@ -21,6 +21,8 @@ class BasicCard extends Component {
     super(props);
 
     this.openModal = props.openModal.bind(this);
+    this.onMouseOver = props.handleButtonMouseOver.bind(this);
+    this.onMouseOut = props.handleButtonMouseOut.bind(this);
   }
 
   render() {
@@ -34,7 +36,12 @@ class BasicCard extends Component {
           </CardTitle>
           <CardSubtitle>{ description }</CardSubtitle>
         </CardBody>
-        <Button color='primary' onClick={this.openModal}>Details</Button>
+        <Button
+          color='primary'
+          onClick={this.openModal}
+          onMouseOver={this.onMouseOver}
+          onMouseOut={this.onMouseOut}
+        >Details</Button>
       </Card>
     );
   }
@@ -45,10 +52,14 @@ class GitHubRepository extends Component {
     super(props);
 
     this.openModal = this.openModal.bind(this);
+    this.closeModal = this.closeModal.bind(this);
+    this.handleDetailsMouseOver = this.handleDetailsMouseOver.bind(this);
+    this.handleDetailsMouseOut = this.handleDetailsMouseOut.bind(this);
 
     this.state = {
       showModal: false,
       readme: DEFAULT_README,
+      detailsHoverTimeoutId: null,
     };
   }
 
@@ -56,16 +67,31 @@ class GitHubRepository extends Component {
     this.setState({ showModal: true });
   }
 
+  closeModal() {
+    this.setState({ showModal: false });
+  }
+
   componentDidMount() {
     const { owner, name, readme } = this.props;
 
-    if (!readme) {
+    if (!readme || readme === DEFAULT_README ) {
+      // hacky way to get README information
       axios({ method: 'get', url: `http://cors-anywhere.herokuapp.com/https://raw.githubusercontent.com/${owner}/${name}/master/README.md`, headers: { origin: null } })
         .then(response => this.setState({ readme: response.data }))
         .catch(this.setState({ readme: DEFAULT_README }));
     } else {
       this.setState({ readme });
     }
+  }
+
+  handleDetailsMouseOver() {
+    const detailsHoverTimeoutId = setTimeout(this.openModal, 1000);
+    this.setState({ detailsHoverTimeoutId });
+  }
+
+  handleDetailsMouseOut() {
+    clearTimeout(this.state.detailsHoverTimeoutId);
+    this.setState({ detailsHoverTimeoutId: null });
   }
 
   render() {
@@ -78,10 +104,13 @@ class GitHubRepository extends Component {
           name={name}
           description={description}
           openModal={this.openModal}
+          handleButtonMouseOver={this.handleDetailsMouseOver}
+          handleButtonMouseOut={this.handleDetailsMouseOut}
         />
         <GitHubRepositoryDetails
           show={showModal}
           readme={readme}
+          onClose={this.closeModal}
         />
       </div>
     )
@@ -93,6 +122,8 @@ BasicCard.propTypes = {
   name: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
   openModal: PropTypes.func.isRequired,
+  handleButtonMouseOver: PropTypes.func.isRequired,
+  handleButtonMouseOut: PropTypes.func.isRequired,
 }
 
 GitHubRepository.defaultProps = {

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import { Row, Col } from 'reactstrap';
-import GithubRepository from '../GitHubRepository';
+import GitHubRepository from '../GitHubRepository';
 
 const DEFAULT_ROW_SIZE = 3;
 
@@ -28,12 +28,12 @@ class GitHubProjects extends Component {
   renderChildren() {
     const { children, owner } = this.props;
 
-    return React.Children.map((children), (child, ) => {
+    return React.Children.map(children, child => {
       if (!child.props.owner) {
         return React.cloneElement(child, { owner });
       }
 
-      return React.cloneElement(child);
+      return child;
     })
   }
   render() {
@@ -50,7 +50,7 @@ ProjectRow.defaultProps = {
 };
 
 ProjectRow.propTypes = {
-  projects: PropTypes.arrayOf(GithubRepository).isRequired,
+  projects: PropTypes.arrayOf(PropTypes.node).isRequired,
   rowSize: PropTypes.number,
 };
 
@@ -60,7 +60,7 @@ GitHubProjects.defaultProps = {
 
 GitHubProjects.propTypes = {
   owner: PropTypes.string.isRequired,
-  children: PropTypes.arrayOf(GithubRepository).isRequired,
+  children: PropTypes.arrayOf(PropTypes.node).isRequired,
   rowSize: PropTypes.number,
 };
 
