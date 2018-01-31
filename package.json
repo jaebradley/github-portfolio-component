@@ -8,7 +8,7 @@
     "commitmsg": "commitlint -e $GIT_PARAMS",
     "compile": "babel -d build/ src/ --copy-files --ignore node_modules,*.test.js,setupTest.js",
     "lint": "eslint --ext .js .",
-    "test": "jest --coverage",
+    "test": "jest --coverage --passWithNoTests",
     "prepublishOnly": "npm run compile",
     "gc": "commit",
     "semantic-release": "semantic-release pre && npm publish && semantic-release post",
