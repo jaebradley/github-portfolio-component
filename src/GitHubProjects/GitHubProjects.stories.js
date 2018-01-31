@@ -11,7 +11,7 @@ storiesOf('GitHubProjects', module)
       <GitHubRepository owner={'reactstrap'} name={'reactstrap'} readme={test} description={'first description'} />
       <GitHubRepository name={'uber-cli'} readme={test} description={'second description'} />
       <GitHubRepository owner={'reactstrap'} name={'reactstrap'} readme={test} description={'third description'} />
-      <GitHubRepository name={'uber-cli'} readme={test} description={'fourth description'} />
+      <GitHubRepository name={'uber-cli'} description={'fourth description'} />
     </GitHubProjects>
   )
 );

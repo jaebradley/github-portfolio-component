@@ -8,7 +8,7 @@
     "commitmsg": "commitlint -e $GIT_PARAMS",
     "compile": "babel -d build/ src/ --copy-files --ignore node_modules,*.test.js,setupTest.js",
     "lint": "eslint --ext .js .",
-    "test": "jest --coverage",
+    "test": "jest --coverage --passWithNoTests",
     "prepublishOnly": "npm run compile",
     "gc": "commit",
     "semantic-release": "semantic-release",
@@ -16,7 +16,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jaebradley/github-portfolio-component.git"
+    "url": "https://github.com/jaebradley/github-portfolio-component.git"
   },
   "keywords": [
     "github",
@@ -60,6 +60,7 @@
     "semantic-release": "^12.4.1",
     "source-map-loader": "^0.2.3",
     "style-loader": "^0.20.1",
+    "travis-deploy-once": "^4.3.3",
     "webpack": "^3.10.0",
     "webpack-build-notifier": "^0.1.22",
     "webpack-dev-server": "^2.11.1"

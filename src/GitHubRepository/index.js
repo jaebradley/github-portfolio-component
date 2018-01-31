@@ -10,7 +10,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 
 import GitHubRepositoryDetails from '../GitHubRepositoryDetails';
 
-import '../../css/style.css';
+import '../css/style.css';
 
 fontawesome.library.add(faExternalLinkAlt);
 
@@ -21,6 +21,8 @@ class BasicCard extends Component {
     super(props);
 
     this.openModal = props.openModal.bind(this);
+    this.onMouseOver = props.handleButtonMouseOver.bind(this);
+    this.onMouseOut = props.handleButtonMouseOut.bind(this);
   }
 
   render() {
@@ -30,11 +32,21 @@ class BasicCard extends Component {
         <CardBody>
           <CardTitle>
             <a href={`https://github.com/${owner}/${name}`} target='__blank'>{ name }</a>
-            <span>{ ' ' }<FontAwesomeIcon className='repository-link' icon={'external-link-square-alt'} /></span>
+            <span>{ ' ' }
+              <FontAwesomeIcon
+                className='repository-link'
+                icon={'external-link-square-alt'}
+              />
+            </span>
           </CardTitle>
           <CardSubtitle>{ description }</CardSubtitle>
         </CardBody>
-        <Button color='primary' onClick={this.openModal}>Details</Button>
+        <Button
+          color='primary'
+          onClick={this.openModal}
+          onMouseOver={this.onMouseOver}
+          onMouseOut={this.onMouseOut}
+        >Details</Button>
       </Card>
     );
   }
@@ -45,10 +57,14 @@ class GitHubRepository extends Component {
     super(props);
 
     this.openModal = this.openModal.bind(this);
+    this.closeModal = this.closeModal.bind(this);
+    this.handleDetailsMouseOver = this.handleDetailsMouseOver.bind(this);
+    this.handleDetailsMouseOut = this.handleDetailsMouseOut.bind(this);
 
     this.state = {
       showModal: false,
       readme: DEFAULT_README,
+      detailsHoverTimeoutId: null,
     };
   }
 
@@ -56,16 +72,34 @@ class GitHubRepository extends Component {
     this.setState({ showModal: true });
   }
 
+  closeModal() {
+    this.setState({ showModal: false });
+  }
+
   componentDidMount() {
     const { owner, name, readme } = this.props;
 
-    if (!readme) {
-      axios({ method: 'get', url: `http://cors-anywhere.herokuapp.com/https://raw.githubusercontent.com/${owner}/${name}/master/README.md`, headers: { origin: null } })
-        .then(response => this.setState({ readme: response.data }))
+    if (!readme || readme === DEFAULT_README ) {
+      // hacky way to get README information
+      axios({
+        method: 'get',
+        url: `http://cors-anywhere.herokuapp.com/https://raw.githubusercontent.com/${owner}/${name}/master/README.md`,
+        headers: { origin: null }
+      }).then(response => this.setState({ readme: response.data }))
         .catch(this.setState({ readme: DEFAULT_README }));
     } else {
       this.setState({ readme });
     }
+  }
+
+  handleDetailsMouseOver() {
+    const detailsHoverTimeoutId = setTimeout(this.openModal, this.props.hoverDelay);
+    this.setState({ detailsHoverTimeoutId });
+  }
+
+  handleDetailsMouseOut() {
+    clearTimeout(this.state.detailsHoverTimeoutId);
+    this.setState({ detailsHoverTimeoutId: null });
   }
 
   render() {
@@ -78,10 +112,13 @@ class GitHubRepository extends Component {
           name={name}
           description={description}
           openModal={this.openModal}
+          handleButtonMouseOver={this.handleDetailsMouseOver}
+          handleButtonMouseOut={this.handleDetailsMouseOut}
         />
         <GitHubRepositoryDetails
           show={showModal}
           readme={readme}
+          onClose={this.closeModal}
         />
       </div>
     )
@@ -93,10 +130,13 @@ BasicCard.propTypes = {
   name: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
   openModal: PropTypes.func.isRequired,
+  handleButtonMouseOver: PropTypes.func.isRequired,
+  handleButtonMouseOut: PropTypes.func.isRequired,
 }
 
 GitHubRepository.defaultProps = {
   readme: DEFAULT_README,
+  hoverDelay: 1000,
 };
 
 GitHubRepository.propTypes = {
@@ -104,6 +144,7 @@ GitHubRepository.propTypes = {
   description: PropTypes.string.isRequired,
   owner: PropTypes.string.isRequired,
   readme: PropTypes.string,
+  hoverDelay: PropTypes.number,
 };
 
 export default GitHubRepository;
