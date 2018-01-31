@@ -93,7 +93,7 @@ class GitHubRepository extends Component {
   }
 
   handleDetailsMouseOver() {
-    const detailsHoverTimeoutId = setTimeout(this.openModal, 1000);
+    const detailsHoverTimeoutId = setTimeout(this.openModal, this.props.hoverDelay);
     this.setState({ detailsHoverTimeoutId });
   }
 
@@ -136,6 +136,7 @@ BasicCard.propTypes = {
 
 GitHubRepository.defaultProps = {
   readme: DEFAULT_README,
+  hoverDelay: 1000,
 };
 
 GitHubRepository.propTypes = {
@@ -143,6 +144,7 @@ GitHubRepository.propTypes = {
   description: PropTypes.string.isRequired,
   owner: PropTypes.string.isRequired,
   readme: PropTypes.string,
+  hoverDelay: PropTypes.number,
 };
 
 export default GitHubRepository;
