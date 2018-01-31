@@ -11,12 +11,12 @@
     "test": "jest --coverage",
     "prepublishOnly": "npm run compile",
     "gc": "commit",
-    "semantic-release": "semantic-release",
+    "semantic-release": "semantic-release pre && npm publish && semantic-release post",
     "start": "start-storybook -p 6006"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jaebradley/github-portfolio-component.git"
+    "url": "https://github.com/jaebradley/github-portfolio-component.git"
   },
   "keywords": [
     "github",
