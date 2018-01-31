@@ -11,7 +11,7 @@
     "test": "jest --coverage --passWithNoTests",
     "prepublishOnly": "npm run compile",
     "gc": "commit",
-    "semantic-release": "semantic-release pre && npm publish && semantic-release post",
+    "semantic-release": "semantic-release",
     "start": "start-storybook -p 6006"
   },
   "repository": {
@@ -60,6 +60,7 @@
     "semantic-release": "^12.4.1",
     "source-map-loader": "^0.2.3",
     "style-loader": "^0.20.1",
+    "travis-deploy-once": "^4.3.3",
     "webpack": "^3.10.0",
     "webpack-build-notifier": "^0.1.22",
     "webpack-dev-server": "^2.11.1"
