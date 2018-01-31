@@ -1,14 +1,18 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-
 import { Row, Col } from 'reactstrap';
-import GitHubRepository from '../GitHubRepository';
 
 const DEFAULT_ROW_SIZE = 3;
 
 const ProjectRow = ({ projects, rowSize }) => (
   <Row>
-    { projects.map((project, i) => (<Col key={`${i}-project`} md={ { size: rowSize }}>{ project }</Col>)) }
+    { projects.map((project, index) => (
+        <Col
+          key={`${index}-project`}
+          md={ { size: rowSize } }
+        >{ project }</Col>
+      ))
+    }
   </Row>
 );
 
@@ -19,10 +23,16 @@ class GitHubProjects extends Component {
     this.renderChildren = this.renderChildren.bind(this);
   }
 
-  renderDecks() {
+  renderProjects() {
     const { rowSize } = this.props;
+
     const children = this.renderChildren();
-    return children.map((e, i) => i % rowSize === 0 ? (<ProjectRow projects={ children.slice(i, i + rowSize) } />) : null);
+
+    return children.map((el, index) => {
+      if (index % rowSize === 0) {
+        return (<ProjectRow projects={ children.slice(index, index + rowSize) } />);
+      }
+    });
   }
 
   renderChildren() {
@@ -36,12 +46,9 @@ class GitHubProjects extends Component {
       return child;
     })
   }
+
   render() {
-    return (
-      <div>
-        { this.renderDecks() }
-      </div>
-    )
+    return (<div>{ this.renderProjects() }</div>);
   }
 }
 

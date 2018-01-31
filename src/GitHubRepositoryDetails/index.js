@@ -5,15 +5,13 @@ import showdown from 'showdown';
 import PropTypes from 'prop-types';
 
 import 'bootstrap/dist/css/bootstrap.css';
-import '../../css/style.css';
+import '../css/style.css';
 
 class GitHubRepositoryDetails extends Component {
   constructor(props) {
     super(props);
 
     const { show } = props;
-
-    console.log(props);
 
     this.converter = new showdown.Converter();
     this.close = this.close.bind(this);
@@ -60,7 +58,7 @@ GitHubRepositoryDetails.defaultProps = {
 GitHubRepositoryDetails.propTypes = {
   show: PropTypes.bool.isRequired,
   readme: PropTypes.string.isRequired,
-  onClose: PropTypes.string,
+  onClose: PropTypes.func,
 };
 
 export default GitHubRepositoryDetails;

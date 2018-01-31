@@ -10,7 +10,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 
 import GitHubRepositoryDetails from '../GitHubRepositoryDetails';
 
-import '../../css/style.css';
+import '../css/style.css';
 
 fontawesome.library.add(faExternalLinkAlt);
 
@@ -32,7 +32,12 @@ class BasicCard extends Component {
         <CardBody>
           <CardTitle>
             <a href={`https://github.com/${owner}/${name}`} target='__blank'>{ name }</a>
-            <span>{ ' ' }<FontAwesomeIcon className='repository-link' icon={'external-link-square-alt'} /></span>
+            <span>{ ' ' }
+              <FontAwesomeIcon
+                className='repository-link'
+                icon={'external-link-square-alt'}
+              />
+            </span>
           </CardTitle>
           <CardSubtitle>{ description }</CardSubtitle>
         </CardBody>
@@ -76,8 +81,11 @@ class GitHubRepository extends Component {
 
     if (!readme || readme === DEFAULT_README ) {
       // hacky way to get README information
-      axios({ method: 'get', url: `http://cors-anywhere.herokuapp.com/https://raw.githubusercontent.com/${owner}/${name}/master/README.md`, headers: { origin: null } })
-        .then(response => this.setState({ readme: response.data }))
+      axios({
+        method: 'get',
+        url: `http://cors-anywhere.herokuapp.com/https://raw.githubusercontent.com/${owner}/${name}/master/README.md`,
+        headers: { origin: null }
+      }).then(response => this.setState({ readme: response.data }))
         .catch(this.setState({ readme: DEFAULT_README }));
     } else {
       this.setState({ readme });
