@@ -1,6 +1,6 @@
 import React from 'react';
 
-import '../../css/style.css';
+import '../css/style.css';
 
 const ContentPlaceholder = () => (
   <div className="timeline-wrapper">
