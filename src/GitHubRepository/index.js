@@ -83,7 +83,7 @@ class GitHubRepository extends Component {
       // hacky way to get README information
       axios({
         method: 'get',
-        url: `http://cors-anywhere.herokuapp.com/https://raw.githubusercontent.com/${owner}/${name}/master/README.md`,
+        url: `https://cors-anywhere.herokuapp.com/https://raw.githubusercontent.com/${owner}/${name}/master/README.md`,
         headers: { origin: null }
       }).then(response => this.setState({ readme: response.data }))
         .catch(this.setState({ readme: DEFAULT_README }));
