@@ -7,6 +7,7 @@
     "codecov": "codecov",
     "commitmsg": "commitlint -e $GIT_PARAMS",
     "compile": "babel -d build/ src/ --copy-files --ignore node_modules,*.test.js,setupTest.js",
+    "deploy-storybook": "storybook-to-ghpages",
     "lint": "eslint --ext .js .",
     "test": "jest --coverage --passWithNoTests",
     "prepublishOnly": "npm run compile",
