@@ -4,12 +4,12 @@ import { Row, Col } from 'reactstrap';
 
 const DEFAULT_ROW_SIZE = 3;
 
-const ProjectRow = ({ projects, rowSize }) => (
-  <Row>
+const ProjectRow = ({ projects, rowSize, horizontalAlignmentType }) => (
+  <Row className={`justify-content-${horizontalAlignmentType}`}>
     { projects.map((project, index) => (
         <Col
           key={`${index}-project`}
-          md={ { size: rowSize } }
+          sm={ { size: rowSize } }
         >{ project }</Col>
       ))
     }
@@ -24,13 +24,18 @@ class GitHubProjects extends Component {
   }
 
   renderProjects() {
-    const { rowSize } = this.props;
+    const { rowSize, horizontalAlignmentType } = this.props;
 
     const children = this.renderChildren();
 
     return children.map((el, index) => {
       if (index % rowSize === 0) {
-        return (<ProjectRow projects={ children.slice(index, index + rowSize) } />);
+        return (
+          <ProjectRow
+            horizontalAlignmentType={horizontalAlignmentType}
+            projects={ children.slice(index, index + rowSize) }
+          />
+        );
       }
     });
   }
@@ -54,21 +59,25 @@ class GitHubProjects extends Component {
 
 ProjectRow.defaultProps = {
   rowSize: DEFAULT_ROW_SIZE,
+  horizontalAlignmentType: 'center',
 };
 
 ProjectRow.propTypes = {
   projects: PropTypes.arrayOf(PropTypes.node).isRequired,
   rowSize: PropTypes.number,
+  horizontalAlignmentType: PropTypes.oneOf(['center', 'start', 'end', 'between', 'around']),
 };
 
 GitHubProjects.defaultProps = {
   rowSize: DEFAULT_ROW_SIZE,
+  horizontalAlignmentType: 'center',
 };
 
 GitHubProjects.propTypes = {
   owner: PropTypes.string.isRequired,
   children: PropTypes.arrayOf(PropTypes.node).isRequired,
   rowSize: PropTypes.number,
+  horizontalAlignmentType: PropTypes.oneOf(['center', 'start', 'end', 'between', 'around']),
 };
 
 export default GitHubProjects;
