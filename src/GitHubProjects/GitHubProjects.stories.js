@@ -13,5 +13,26 @@ storiesOf('GitHubProjects', module)
       <GitHubRepository owner={'reactstrap'} name={'reactstrap'} readme={test} description={'third description'} />
       <GitHubRepository name={'uber-cli'} description={'fourth description'} />
     </GitHubProjects>
-  )
-);
+  ))
+  .add('another example', () => (
+    <GitHubProjects owner={'jaebradley'}>
+      <GitHubRepository name={'nba-cli'} description={'NBA CLI'} />
+      <GitHubRepository name={'uber-cli'} description={'Uber CLI'} />
+    </GitHubProjects>
+  ))
+  .add('one more example', () => (
+    <GitHubProjects owner={'jaebradley'}>
+      <GitHubRepository name={'nba-cli'} description={'Foobar'} />
+      <GitHubRepository name={'uber-cli'} description={'Baz'} />
+    </GitHubProjects>
+  ))
+  .add('one one example', () => (
+    <GitHubProjects owner={'jaebradley'}>
+      <GitHubRepository name={'nba-cli'} description={'Foobar'} />
+    </GitHubProjects>
+  ))
+  .add('one one example', () => (
+    <GitHubProjects owner={'jaebradley'}>
+      <GitHubRepository name={'nba-cli'} description={'blablabla'} />
+    </GitHubProjects>
+  ));
