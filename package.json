@@ -14,6 +14,7 @@
     "gc": "commit",
     "semantic-release": "semantic-release",
     "start": "start-storybook -p 6006",
+    "storybook": "build-storybook -o .out",
     "travis-deploy-once": "travis-deploy-once"
   },
   "repository": {
