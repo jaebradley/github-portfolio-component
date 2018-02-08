@@ -28,7 +28,7 @@ storiesOf('GitHubProjects', module)
   ))
   .add('one one example', () => (
     <GitHubProjects owner={'jaebradley'}>
-      <GitHubRepository name={'nba-cli'} description={'Foobar'} />
+      <GitHubRepository name={'nba-cli'} description={'Another Test'} />
     </GitHubProjects>
   ))
   .add('one one example', () => (
