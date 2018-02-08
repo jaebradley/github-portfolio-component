@@ -26,12 +26,12 @@ storiesOf('GitHubProjects', module)
       <GitHubRepository name={'uber-cli'} description={'Baz'} />
     </GitHubProjects>
   ))
-  .add('one one example', () => (
+  .add('one moar moar example', () => (
     <GitHubProjects owner={'jaebradley'}>
       <GitHubRepository name={'nba-cli'} description={'Another Test'} />
     </GitHubProjects>
   ))
-  .add('one one example', () => (
+  .add('one moar moar moar example', () => (
     <GitHubProjects owner={'jaebradley'}>
       <GitHubRepository name={'nba-cli'} description={'blablabla'} />
     </GitHubProjects>
