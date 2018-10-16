@@ -86,7 +86,7 @@
     "react-render-html": "^0.6.0",
     "react-transition-group": "^2.2.1",
     "reactstrap": "^5.0.0-alpha.4",
-    "showdown": "^1.8.6",
+    "showdown": "^1.8.7",
     "util": "^0.10.3"
   }
 }
