@@ -39,7 +39,7 @@
     "@commitlint/prompt": "^6.0.2",
     "@commitlint/prompt-cli": "^6.0.2",
     "@storybook/addon-actions": "^3.3.11",
-    "@storybook/addon-console": "^1.0.0",
+    "@storybook/addon-console": "^1.0.8",
     "@storybook/addon-options": "^3.3.11",
     "@storybook/addon-storyshots": "^3.3.11",
     "@storybook/channels": "^3.3.11",
