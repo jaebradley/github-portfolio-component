@@ -72,7 +72,7 @@
     "@fortawesome/fontawesome-free-solid": "^5.0.6",
     "@fortawesome/react-fontawesome": "0.0.17",
     "axios": "^0.18.0",
-    "bootstrap": "^4.0.0",
+    "bootstrap": "^4.4.0",
     "cheerio": "^1.0.0-rc.2",
     "classnames": "^2.2.5",
     "jquery": "^3.3.1",
