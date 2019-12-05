@@ -85,7 +85,7 @@
     "react-popper": "^0.8.2",
     "react-render-html": "^0.6.0",
     "react-transition-group": "^2.2.1",
-    "reactstrap": "^5.0.0-alpha.4",
+    "reactstrap": "^8.2.0",
     "showdown": "^1.8.6",
     "util": "^0.10.3"
   }
