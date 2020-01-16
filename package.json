@@ -40,7 +40,7 @@
     "@commitlint/prompt-cli": "^6.0.2",
     "@storybook/addon-actions": "^5.3.5",
     "@storybook/addon-console": "^1.0.0",
-    "@storybook/addon-options": "^3.3.11",
+    "@storybook/addon-options": "^5.3.5",
     "@storybook/addon-storyshots": "^3.3.11",
     "@storybook/channels": "^3.3.11",
     "@storybook/react": "^3.3.11",
