@@ -54,7 +54,7 @@
     "codecov": "^3.0.0",
     "css-loader": "^0.28.9",
     "eslint": "^4.16.0",
-    "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-config-airbnb-base": "^14.1.0",
     "eslint-plugin-import": "^2.8.0",
     "eslint-plugin-react": "^7.6.0",
     "husky": "^0.14.3",
