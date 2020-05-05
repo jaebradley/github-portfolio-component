@@ -84,7 +84,7 @@
     "react-markdown": "^3.1.4",
     "react-popper": "^0.8.2",
     "react-render-html": "^0.6.0",
-    "react-transition-group": "^2.2.1",
+    "react-transition-group": "^4.4.0",
     "reactstrap": "^5.0.0-alpha.4",
     "showdown": "^1.8.6",
     "util": "^0.10.3"
